@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Responsive facewall</title>
+		<meta name="description" content="" />
+		<meta name="author" content="Garry Blight" />
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		
+		<script type="text/javascript" src="js/require.js"></script> <!--  data-main="boot"  -->
+
+	</head>
+
+	<body>
+		<!-- Help setting up if you need it - remove this line and the next one once you're up and running -->
+		<!-- Start of 'guess-the-sound'' interactive -->
+		<noscript>
+			<span class='GuiNoScript'>Please <a href='http://enable-javascript.com/'>enable JavaScript</a> to view this interactive feature</span>
+			<style type='text/css'>
+				#FW_M100_2013_container {
+					display: none;
+				}
+			</style>
+		</noscript>
+
+		<figure class="gu-interactive" data-interactive="boot.js"> 
+	
+
+		</figure>
+
+		<!-- Expects requirejs to be present in the R2 page -->
+		<script>
+			require(['boot.js'], function(app) { // http://interactive.guim.co.uk/next-gen/artanddesign/ng-interactive/2013/oct/photography-forth-bridge/
+				var el = document.querySelector('.gu-interactive');
+				app.boot(el, window, {}, {});
+			});
+		</script>
+
+	</body>
+</html>
