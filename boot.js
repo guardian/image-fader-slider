@@ -10,11 +10,12 @@ define([], function() {'use strict';
 		 *
 		 **/
 		boot : function(el, context, config, mediator) {
-			
-			
+
+
 			var cfg = {
 				context : 'interactive',
-				baseUrl : 'http://interactive.guim.co.uk/next-gen/artanddesign/ng-interactive/2013/nov/london-endell-street-then-and-now', //http://interactive.guim.co.uk/next-gen/artanddesign/ng-interactive/2013/oct/kingsway-photography-then-and-now
+				//baseUrl : 'http://interactive.guim.co.uk/next-gen/artanddesign/ng-interactive/2013/nov/london-endell-street-then-and-now',                //http://interactive.guim.co.uk/next-gen/artanddesign/ng-interactive/2013/oct/kingsway-photography-then-and-now
+                baseUrl : 'http://interactive.guim.co.uk/next-gen/artanddesign/ng-interactive/2013/nov/27/photography',
 				paths : {
 					// the left side is the module ID,
 					// the right side is the path to
@@ -32,13 +33,14 @@ define([], function() {'use strict';
 
 			if ( typeof require() === 'function') {
 				var req2 = require.config(cfg);
-				req2(['main',  "http://interactive.guim.co.uk/next-gen/artanddesign/ng-interactive/2013/nov/london-endell-street-then-and-now/js/hand-1.1.2.js"], function(App) {
+				req2(['main',  "http://interactive.guim.co.uk/next-gen/artanddesign/ng-interactive/2013/nov/27/photography/js/hand-1.1.2.js"], function(App) {
+                    console.log('in here');
 					App.setup(el, context, false);
-					
+
 				});
 			} else {
 				// curl, i.e. next-gen
-				require(cfg, ['main', "js!http://interactive.guim.co.uk/next-gen/artanddesign/ng-interactive/2013/nov/london-endell-street-then-and-now/js/hand-1.1.2.js"]).then(function(App) {
+				require(cfg, ['main', "js!http://interactive.guim.co.uk/next-gen/artanddesign/ng-interactive/2013/nov/27/photography/js/hand-1.1.2.js"]).then(function(App) {
 					App.setup(el, context, true);
 				});
 			}

@@ -13,7 +13,7 @@
  *
  */
 define(['jquery', 'TweenMax'], function($, TweenMax) {
-	
+
 	'use strict';
 
 	// globals
@@ -24,7 +24,8 @@ define(['jquery', 'TweenMax'], function($, TweenMax) {
 		// works on ie10
 	};
 
-	var baseURL = "http://interactive.guim.co.uk/next-gen/artanddesign/ng-interactive/2013/nov/london-endell-street-then-and-now/"; // 
+	//var baseURL = "http://interactive.guim.co.uk/next-gen/artanddesign/ng-interactive/2013/nov/london-endell-street-then-and-now/"; //
+    var baseURL = "http://interactive.guim.co.uk/next-gen/artanddesign/ng-interactive/2013/nov/27/photography/";
 	// ADD BASE URL HERE !!!!!!
 
 	var _element, _context, _isNextGen;
@@ -55,7 +56,7 @@ define(['jquery', 'TweenMax'], function($, TweenMax) {
 			$(_element).find('.caption').append(" " + creditHtml).css({
 				"padding-bottom" : "25px"
 			});
-			
+
 			$(_element).find('.credit').hide();
 
 		}
@@ -100,11 +101,11 @@ define(['jquery', 'TweenMax'], function($, TweenMax) {
 		$(_element).find('.gdn-fader-slider img').on('dragstart', function(event) {
 			event.preventDefault();
 		});
-		
+
 
 		$(_element).find('.gdn-fader-slider').bind('pointerdown', function(event) {
 			event.preventDefault();
-			
+
 			var offset = $(this).offset();
 
 			var div = this;
@@ -131,7 +132,7 @@ define(['jquery', 'TweenMax'], function($, TweenMax) {
 			event.preventDefault();
 
 			if (mouseDown) {
-				
+
 				var div = this;
 				var splitArr = div.id.split("_");
 				var index = Number(splitArr[1]);
@@ -162,8 +163,8 @@ define(['jquery', 'TweenMax'], function($, TweenMax) {
 			}
 
 		});
-		
-		
+
+
 
 		$(_context).bind('pointerup touchend mouseup', function(event) {
 
@@ -200,7 +201,7 @@ define(['jquery', 'TweenMax'], function($, TweenMax) {
 	function setup(el, context, isNextGen) {
 
 		var url = baseURL + "data/scaffolding.jsonp";
-		
+
 		$.ajax({
 			url : url,
 			jsonp : false,
@@ -208,7 +209,7 @@ define(['jquery', 'TweenMax'], function($, TweenMax) {
 			jsonpCallback : "image_fader_2013_fn",
 			cache : true,
 			success : function(data) {
-				
+
 				$(el).html(data.myStr);
 
 				_element = el;
