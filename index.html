@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<!-- CSS_START -->
+		<!--<link rel="stylesheet" href="css/local-fonts.css"/>-->
+		<link rel="stylesheet" href="http://pasteup.guim.co.uk/0.0.5/css/fonts.pasteup.min.css"/>
+		<link rel="stylesheet" href="css/reset.css"/>
+		<link rel="stylesheet" href="css/main.css"/>
+		<!-- CSS_END -->
+		<!-- JS_START -->
+		<script src='js/jquery-1.10.1.min.js' type="text/javascript"></script>
+		<script src='js/hand-1.1.2.js' type="text/javascript"></script>
+		<script src='js/TweenMax.min.js' type="text/javascript"></script>
+		<script src='js/main.js' type="text/javascript"></script>
+
+		<script>
+		window.jQuery = window.jQ = jQuery.noConflict();
+		</script>
+
+		<!-- JS_END -->
+		<title>Image fader</title>
+	</head>
+	<body>
+
+		<div id="image-fader-container" ></div>
+		
+		<script src="//interactive.guim.co.uk/libs/iframe-messenger/iframeMessenger.js" type="text/javascript"></script>
+
+		<script>
+
+		jQ(function() {
+
+		iframeMessenger.enableAutoResize();
+
+		var links = document.querySelectorAll('a');
+
+    		for(var i = 0; i < links.length; i++) {
+        		links[i].addEventListener('click', function(event) {
+            		event.preventDefault();
+            		iframeMessenger.navigate(this.href);
+        		}, false);
+    	}
+
+		var app = new IMAGE_FADER.App();
+
+		});
+
+
+		</script>
+	</body>
+</html>

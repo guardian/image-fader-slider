@@ -1,47 +1,136 @@
-//define('app-name', ['$uery'], function($) {
+var IMAGE_FADER = IMAGE_FADER || {};
 
-//function init() {
-//do stuff
-//}
+if(!Array.indexOf) {// IE fix
+		Array.prototype.indexOf = function(obj) {
+			for(var i = 0; i < this.length; i++) {
+				if(this[i] === obj) {
+					return i;
+				}
+			}
+			return -1;
+		}
+	}
 
-//return {
-//init: init
-//}
-//})
+var beforeImage, afterImage, mouseDown = false, fadeTime = 2.5, mouseMove = false, startMouseX = 0, lastFade = 0, firstImage = true, tweens, currentFaderIndex = 0;
 
-/**
- *
- */
-define(['jquery', 'TweenMax'], function($, TweenMax) {
+var _isNextGen = true;
+
+var _element = "#image-fader-container";
+var _context = window;
+
+var _flag = false;
+
+var _key = window.location.search.slice(1);
+
+
+IMAGE_FADER.App = function() {
+
+	"use strict";
+
+	IMAGE_FADER.load();
+
+};
+
+IMAGE_FADER.load = function() {
+
+				var key = "0AhDtwXOtiI5edHd6amY2ME5POVozYVNYV05VSUpJUEE";
+				var url;
+
+				try {
+
+					 url = "http://interactive.guim.co.uk/spreadsheetdata/" + key + ".json";
+
+        				jQ.getJSON ( url, function( data ) {
+
+          				IMAGE_FADER.handleMainDataResponse(data);
+
+        			});
+
+					} catch (e) {
+
+						url = "http://interactive.guim.co.uk/spreadsheetdata/" + key + ".jsonp";
+
+				jQ.ajax({
+					type:'get',
+					dataType:'jsonp',
+					url: url,
+					jsonpCallback: 'gsS3Callback',
+					cache: true
+				});
+
+			}
+
+}
+
+window.gsS3Callback = function (data) {
+
+		IMAGE_FADER.handleMainDataResponse(data);
 	
-	'use strict';
+}
 
-	// globals
 
-	function is_touch_device() {
-		return 'ontouchstart' in window// works on most browsers
-		|| 'onmsgesturechange' in window;
-		// works on ie10
-	};
+IMAGE_FADER.handleMainDataResponse = function(data) {
 
-	var baseURL = "http://interactive.guim.co.uk/next-gen/artanddesign/ng-interactive/2013/nov/london-endell-street-then-and-now/"; // 
-	// ADD BASE URL HERE !!!!!!
+	var dataset = [], d = data.sheets.Sheet1;
 
-	var _element, _context, _isNextGen;
-	var isTouch, eventMove, eventDown, eventUp;
-	var beforeImage, afterImage, mouseDown = false, fadeTime = 2.5, mouseMove = false, startMouseX = 0, lastFade = 0, firstImage = true, tweens, currentFaderIndex = 0;
+	for (var i = 0; i < d.length; i++) {
 
-	function initFaders() {
+		if (d[i].uniquefadername == _key) {
+			dataset.push(d[i]);
+		}
 
-		if (!_isNextGen) {
+	}
 
-			$(_element).find('.caption').css({
+	IMAGE_FADER.buildSliders(dataset);
+
+	IMAGE_FADER.addListeners();
+
+	//var h = jQ(_element).height();
+
+	//jQ("body").css({"minHeight" : h});
+
+}
+
+
+
+IMAGE_FADER.arrayObjectIndexOf = function (myArray, searchTerm, property) {
+		for (var i = 0, len = myArray.length; i < len; i++) {
+			if (myArray[i][property] === searchTerm)
+				return i;
+		}
+		return -1;
+}
+
+
+IMAGE_FADER.buildSliders = function(data) {
+
+		var i, faders = [], beforeImage, afterImage, caption, credit, htmlString = '';
+	
+			for (i = 0; i < data.length; i++) {
+
+				beforeImage = data[i].beforeimage;
+				afterImage = data[i].afterimage;
+				altTag = data[i].alttag;
+				caption = data[i].caption;
+				credit = data[i].credit;
+
+
+				htmlString += '<div class="gdn-fader-slider" style="cursor:pointer;position:relative;" ><img  class="before-image" src="' + beforeImage + '" alt="' + altTag + '" style="width:100%;position:relative;top:0px;left:0px;" /><img class="after-image" src="' + afterImage + '" alt="' + altTag + '" style="width:100%;position:absolute;top:0px;left:0px;" /></div><div class="caption">' + caption + '</div><div class="credit">' + credit + '</div>';
+				
+			}
+
+			
+	jQ(_element).html(htmlString);
+
+	if (!_isNextGen) {
+
+			jQ(_element).find('.caption').css({
 				"font-size" : "14px",
 				"padding-top" : "10px",
 				"line-height" : "1.25"
 			});
 
-			$(_element).find('.credit').css({
+			jQ(_element).find('.credit').css({
 				"font-size" : "12px",
 				"line-height" : "1.357",
 				"color" : "#999999",
@@ -50,30 +139,31 @@ define(['jquery', 'TweenMax'], function($, TweenMax) {
 
 		} else {
 
-			var creditHtml = $(_element).find('.credit').html();
+			var creditHtml = jQ(_element).find('.credit').html();
 
-			$(_element).find('.caption').append(" " + creditHtml).css({
+			jQ(_element).find('.caption').append(" " + creditHtml).css({
 				"padding-bottom" : "25px"
 			});
 			
-			$(_element).find('.credit').hide();
+			jQ(_element).find('.credit').hide();
 
 		}
+
 
 		tweens = [];
 
 		var ind, tween;
 
-		$(_element).find('.gdn-fader-slider').each(function(index, value) {
+		jQ(_element).find('.gdn-fader-slider').each(function(index, value) {
 
 			var slider = this;
 
-			$(slider).attr('id', 'gdn-fader-slider_' + index);
+			jQ(slider).attr('id', 'gdn-fader-slider_' + index);
 
 			ind = index * 2;
 
-			beforeImage = $(".before-image", slider);
-			afterImage = $(".after-image", slider);
+			beforeImage = jQ(".before-image", slider);
+			afterImage = jQ(".after-image", slider);
 
 			tween = TweenMax.from(afterImage, fadeTime, {
 				css : {
@@ -81,7 +171,7 @@ define(['jquery', 'TweenMax'], function($, TweenMax) {
 				},
 				yoyo : true,
 				repeat : -1,
-				onRepeat : repeatListener,
+				onRepeat : IMAGE_FADER.repeatListener,
 				onRepeatParams : [index],
 				ease : Quad.easeInOut
 			});
@@ -92,20 +182,28 @@ define(['jquery', 'TweenMax'], function($, TweenMax) {
 
 		});
 
-	}
+}
 
-	function addListeners() {
+
+IMAGE_FADER.addListeners = function() {
 		//tween.seek(0.5);
 
-		$(_element).find('.gdn-fader-slider img').on('dragstart', function(event) {
+		jQ(_element).find('.gdn-fader-slider img').on('dragstart', function(event) {
 			event.preventDefault();
 		});
 		
 
-		$(_element).find('.gdn-fader-slider').bind('pointerdown', function(event) {
+		jQ(_element).find('.gdn-fader-slider').bind('mousedown touchstart', function(event) {
+
 			event.preventDefault();
+
+			 if (!_flag) {
+    			_flag = true;
+    			setTimeout(function(){ _flag = false; }, 100);
+ 
+
 			
-			var offset = $(this).offset();
+			var offset = jQ(this).offset();
 
 			var div = this;
 			var splitArr = div.id.split("_");
@@ -123,25 +221,30 @@ define(['jquery', 'TweenMax'], function($, TweenMax) {
 				firstImage = false;
 			}
 
+  			}
+
+			return false;
+
 		});
 
-
-		$(_element).find('.gdn-fader-slider').bind('pointermove', function(event) {
+		jQ(_element).find('.gdn-fader-slider').bind('pointermove', function(event) {
 
 			event.preventDefault();
-
+			
 			if (mouseDown) {
+
+
 				
 				var div = this;
 				var splitArr = div.id.split("_");
 				var index = Number(splitArr[1]);
 
-				var offset = $(this).offset();
+				var offset = jQ(this).offset();
 				var relX;
 
 				relX = event.originalEvent.clientX - offset.left;
 
-				var faderWidth = $(this).width();
+				var faderWidth = jQ(this).width();
 
 				var change;
 				//var relY = event.pageY - offset.top;
@@ -165,7 +268,7 @@ define(['jquery', 'TweenMax'], function($, TweenMax) {
 		
 		
 
-		$(_context).bind('pointerup touchend mouseup', function(event) {
+		jQ(_context).bind('mouseup touchend', function(event) {
 
 			mouseDown = false;
 
@@ -188,48 +291,24 @@ define(['jquery', 'TweenMax'], function($, TweenMax) {
 				}
 
 			}
+			
 
+		});
+
+		jQ( window ).load(function() {
+
+			var h = jQ(_element).innerHeight();
+
+			iframeMessenger.resize(h);
+			
 		});
 
 	}
 
-	function repeatListener(index) {
+
+IMAGE_FADER.repeatListener = function (index) {
 		tweens[index].pause();
-	}
+}
 
-	function setup(el, context, isNextGen) {
 
-		var url = baseURL + "data/scaffolding.jsonp";
-		
-		$.ajax({
-			url : url,
-			jsonp : false,
-			dataType : "jsonp",
-			jsonpCallback : "image_fader_2013_fn",
-			cache : true,
-			success : function(data) {
-				
-				$(el).html(data.myStr);
-
-				_element = el;
-				_context = context;
-				_isNextGen = isNextGen;
-
-				isTouch = is_touch_device();
-
-				eventMove = isTouch ? "touchmove" : "mousemove";
-				eventDown = isTouch ? "touchstart" : "mousedown";
-				eventUp = isTouch ? "touchend" : "mouseup";
-
-				initFaders();
-				addListeners();
-			}
-		});
-	}
-
-	return {
-		setup : setup
-	};
-
-});
 

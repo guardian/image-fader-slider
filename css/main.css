@@ -1,0 +1,56 @@
+/*
+
+FONT FAMILIES FROM GU STYLESHEET
+<link rel="stylesheet" href="http://pasteup.guim.co.uk/0.0.5/css/fonts.pasteup.min.css"/>
+
+"Guardian Egyptian Text", Georgia, serif;
+"Guardian Egyptian Headline", Georgia, serif;
+"Guardian Sans Text", Georgia, serif;
+"Guardian Sans Headline", Georgia, serif;
+"Guardian Titlepiece", Georgia, serif;
+"Guardian Agate Sans", Arial, sans-serif;
+"Guardian Compact", Georgia, serif;
+
+*/
+
+html, body {
+                margin: 0;
+                padding: 0;
+                background-color: #fff;
+}
+
+
+#image-fader-container {
+	position: relative;
+	width: 100%;
+	height: auto;
+}
+
+#image-fader-container .caption {
+
+	display: block;
+	min-height: 2.8rem;
+	max-width: none;
+	padding-left: 0 !important;
+    padding-right: 0 !important;
+    color: #767676;
+    font-family: "AgateSans", "Guardian Agate Sans", "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    font-size: 0.7rem;
+    line-height: 1rem;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 10px;
+}
+
+.caption:before {
+	background-position: -156px -107px;
+    height: 12px;
+    width: 17px;
+    content: "";
+    display: inline-block;
+    margin: 1px 4px 0 0;
+    vertical-align: top;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxMiI+PHBhdGggZmlsbD0iIzY3Njc2NyIgZD0iTTE0LjAyNSAzLjdoLTIuNTUxbC0uOTEtMi4yaC00LjE4OWwtLjgwNCAyLjJoLTIuNTk2bC0uODUuODV2NS4xbC42NjYuODVoMTEuNDE4bC42NjYtLjg1di01LjFsLS44NS0uODV6bS01LjQ1NyA1LjUyOGMtMS4xNzUgMC0yLjEyNS0uOTUzLTIuMTI1LTIuMTI4IDAtMS4xNzMuOTUxLTIuMTI1IDIuMTI1LTIuMTI1IDEuMTcyIDAgMi4xMjUuOTUyIDIuMTI1IDIuMTI1IDAgMS4xNzQtLjk1MyAyLjEyOC0yLjEyNSAyLjEyOHoiLz48L3N2Zz4=");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+}

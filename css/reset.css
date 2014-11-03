@@ -3,7 +3,7 @@
    License: none (public domain)
 */
 
-#FW_M100_2013_container, div, span, applet, object, iframe,
+#df-container, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
@@ -23,25 +23,25 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-#FW_M100_2013_container article, aside, details, figcaption, figure, 
+#df-container article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-#FW_M100_2013_container {
+#df-container {
 	line-height: 1;
 }
-#FW_M100_2013_container ol, ul {
+#df-container ol, ul {
 	list-style: none;
 }
-#FW_M100_2013_container blockquote, q {
+#df-container blockquote, q {
 	quotes: none;
 }
-#FW_M100_2013_container blockquote:before, blockquote:after,
+#df-container blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
 }
-#FW_M100_2013_container table {
+#df-container table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
